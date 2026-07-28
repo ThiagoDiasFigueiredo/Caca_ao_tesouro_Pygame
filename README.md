@@ -1,1 +1,1 @@
-# Ca-a-ao-tesouro---Pygame
+# caça  ao tesouro - pygame
