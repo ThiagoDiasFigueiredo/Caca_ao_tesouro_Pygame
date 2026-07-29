@@ -17,34 +17,75 @@ def main():
         'preto': (0,0,0),
     }
     tela.fill(cores['branca'])
+    
     lado_quadrado = 50
     num_linhas = 4
     tamanho_grade = lado_quadrado * num_linhas  # 200
-
     pos_y = 0
     #Linhas horizontais
     for i in range(num_linhas + 1):  # +1 para fechar a última borda
         pygame.draw.line(tela, cores['preto'], (0, pos_y), (tamanho_grade, pos_y), 1)
         pos_y += lado_quadrado
-
+    
     pos_x = 0
     #Linhas verticais
     for j in range(num_linhas + 1):
         pygame.draw.line(tela, cores['preto'], (pos_x, 0), (pos_x, tamanho_grade), 1)
         pos_x += lado_quadrado
-
     fonte = pygame.font.Font(None,20)
     texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação: {jogador_1}',False,cores['azul'])
     texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação: {jogador_2}',False,cores['vermelho'])
-#Spawn tesouro
+
+#Tabuleiro
+    linhas = 4
+    colunas = 4
+    tabuleiro = []
+    for i in range(linhas):
+        linha = []
+        for j in range(colunas):
+            linha.append(0)
+        tabuleiro.append(linha)
+
+#Spawn buraco/tesouro
+
+    tesouro = 6
+    colocadas = 0
+
+    while colocadas < tesouro:
+        
+        linha = random.randint(0, linhas-1)
+        coluna = random.randint(0, colunas-1)
+        
+        if tabuleiro[linha][coluna] != -1:
+            tabuleiro[linha][coluna] = -1
+            colocadas += 1
+    cont_tesouro = 0
+
+    for linha in tabuleiro:
+        print(linha)
+        cont_tesouro += linha.count(-1)
+
+    print(f'Total de tesouros: {cont_tesouro}')
     
+#Casas sem nada
+ 
 #Looping do jogo
     running = True
     while running:
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 running = False
+            if evento.type == pygame.MOUSEBUTTONDOWN:
 
+                x, y = evento.pos
+                coluna = x // 50
+                linha = y // 50
+
+                if tabuleiro[linha][coluna] == -1:
+                    print("Achou tesouro!")
+                else:
+                    print("Nada")
+                print(evento.pos)
         tela.blit(texto_jogador_1,(20,210))
         tela.blit(texto_jogador_2,(20,230))
         pygame.display.update()
