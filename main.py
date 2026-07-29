@@ -1,0 +1,48 @@
+import pygame
+def main():
+    #Tela
+    pygame.init()
+    largura = 200
+    altura = 250
+    tela = pygame.display.set_mode((largura,altura))
+    pygame.display.set_caption('Caça ao tesouro')
+ #Desenhar as coisas
+    cores = {
+        'branca': (255,255,255),
+        'azul': (0,0,255),
+        'vermelho': (255,0,0),
+        'preto': (0,0,0),
+    }
+    tela.fill(cores['branca'])
+    lado_quadrado = 50
+    num_linhas = 4
+    tamanho_grade = lado_quadrado * num_linhas  # 200
+
+    pos_y = 0
+    #Linhas horizontais
+    for i in range(num_linhas + 1):  # +1 para fechar a última borda
+        pygame.draw.line(tela, cores['azul'], (0, pos_y), (tamanho_grade, pos_y), 1)
+        pos_y += lado_quadrado
+
+    pos_x = 0
+    #Linhas verticais
+    for j in range(num_linhas + 1):
+        pygame.draw.line(tela, cores['azul'], (pos_x, 0), (pos_x, tamanho_grade), 1)
+        pos_x += lado_quadrado
+    
+#Spawn tesouro
+
+#Spawn baús
+
+#Casas vazias
+
+#Looping do jogo
+    running = True
+    while running:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                running = False
+
+        pygame.display.update()
+if __name__ == '__main__':
+    main()
