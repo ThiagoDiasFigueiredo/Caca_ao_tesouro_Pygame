@@ -1,4 +1,5 @@
 import pygame
+import random
 def main():
     #Tela
     pygame.init()
@@ -6,6 +7,8 @@ def main():
     altura = 250
     tela = pygame.display.set_mode((largura,altura))
     pygame.display.set_caption('Caça ao tesouro')
+    jogador_1 = 0
+    jogador_2 = 0
  #Desenhar as coisas
     cores = {
         'branca': (255,255,255),
@@ -21,21 +24,20 @@ def main():
     pos_y = 0
     #Linhas horizontais
     for i in range(num_linhas + 1):  # +1 para fechar a última borda
-        pygame.draw.line(tela, cores['azul'], (0, pos_y), (tamanho_grade, pos_y), 1)
+        pygame.draw.line(tela, cores['preto'], (0, pos_y), (tamanho_grade, pos_y), 1)
         pos_y += lado_quadrado
 
     pos_x = 0
     #Linhas verticais
     for j in range(num_linhas + 1):
-        pygame.draw.line(tela, cores['azul'], (pos_x, 0), (pos_x, tamanho_grade), 1)
+        pygame.draw.line(tela, cores['preto'], (pos_x, 0), (pos_x, tamanho_grade), 1)
         pos_x += lado_quadrado
-    
+
+    fonte = pygame.font.Font(None,20)
+    texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação: {jogador_1}',False,cores['azul'])
+    texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação: {jogador_2}',False,cores['vermelho'])
 #Spawn tesouro
-
-#Spawn baús
-
-#Casas vazias
-
+    
 #Looping do jogo
     running = True
     while running:
@@ -43,6 +45,8 @@ def main():
             if evento.type == pygame.QUIT:
                 running = False
 
+        tela.blit(texto_jogador_1,(20,210))
+        tela.blit(texto_jogador_2,(20,230))
         pygame.display.update()
 if __name__ == '__main__':
     main()
