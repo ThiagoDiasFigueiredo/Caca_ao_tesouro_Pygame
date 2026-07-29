@@ -61,6 +61,7 @@ def main():
         if tabuleiro[linha][coluna] == 0:
             tabuleiro[linha][coluna] = -1
             contador += 1
+            
 
     contador = 0
     while contador < buracos:
@@ -73,12 +74,12 @@ def main():
     #Só para saber as posições 
     for linha in tabuleiro:
         print(linha)
-    
-
-    
-
+#Revelação
+    revelado = []
+    for i in range(linhas):
+        revelado.append([0]*colunas)
 #Casas sem nada
- 
+
 #Looping do jogo
     running = True
     while running:
@@ -92,14 +93,28 @@ def main():
                 linha = y // 50
 
                 if tabuleiro[linha][coluna] == -1:
-                    print("Achou tesouro!")
+                    print('Achou tesouro!')
+                    revelado[linha][coluna] = 1
                 elif tabuleiro[linha][coluna] == -2:
                     print('Achou buraco!')
+                    revelado[linha][coluna] = 2
                 else:
                     print("Nada")
+                    revelado[linha][coluna] = 0
                 print(evento.pos)
         tela.blit(texto_jogador_1,(20,210))
         tela.blit(texto_jogador_2,(20,230))
+
+
+        for i in range(linhas):
+            for j in range(colunas):
+
+                if revelado[i][j] == 1:
+                    pygame.draw.rect(tela,cores['azul'],(j * 50 + 1, i * 50 + 1, 49, 49))
+
+                elif revelado[i][j] == 2:
+                    pygame.draw.rect(tela,cores['vermelho'],(j * 50 + 1, i * 50 + 1, 49, 49))
+                                
         pygame.display.update()
 if __name__ == '__main__':
     main()
