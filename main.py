@@ -7,8 +7,7 @@ def main():
     altura = 250
     tela = pygame.display.set_mode((largura,altura))
     pygame.display.set_caption('Caça ao tesouro')
-    jogador_1 = 0
-    jogador_2 = 0
+    pontuacao = [0,0] #Pontuaçao[0] == Jogador 1 e pontuação[1] == Jogador 2
  #Desenhar as coisas
  
     cores = {
@@ -37,8 +36,8 @@ def main():
         pos_x += lado_quadrado
 
     fonte = pygame.font.Font(None,20)
-    texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação: {jogador_1}',False,cores['azul'])
-    texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação: {jogador_2}',False,cores['vermelho'])
+    texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação: {pontuacao[0]}',False,cores['azul'])
+    texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação: {pontuacao[1]}',False,cores['vermelho'])
 #Spawn tesouro
 
 #Tabuleiro
@@ -80,7 +79,10 @@ def main():
         revelado.append([0]*colunas)
 #Casas sem nada
 
-#Looping do jogo
+#Qual jogador vai começar:
+    vez = random.choice([1, 2])
+    print(f"Quem começa é o Jogador {vez}")
+    #Looping do jogo
     running = True
     while running:
         for evento in pygame.event.get():
@@ -91,17 +93,52 @@ def main():
                 x, y = evento.pos
                 coluna = x // 50
                 linha = y // 50
+                if y >= 200:
+                    continue
+                if revelado[linha][coluna] != 0: # Não pode clicar 2 vezes na mesma casa
+                    continue
+                
 
                 if tabuleiro[linha][coluna] == -1:
-                    print('Achou tesouro!')
-                    revelado[linha][coluna] = 1
+
+                    if vez == 1:
+                        pontuacao[0] += 100
+                        vez = 2
+                    else:
+                        pontuacao[1] += 100
+                        vez = 1
+
                 elif tabuleiro[linha][coluna] == -2:
-                    print('Achou buraco!')
+
+                    if vez == 1:
+                        pontuacao[0] -= 50
+                        if pontuacao[0] < 0:
+                            pontuacao[0] = 0
+                        vez = 2
+
+                    else:
+                        pontuacao[1] -= 50
+                        if pontuacao[1] < 0:
+                            pontuacao[1] = 0
+                        vez = 1
+                        
+                if tabuleiro[linha][coluna] == -1:
+                        print(f'Jogador {vez} achou um tesouro!')
+                        revelado[linha][coluna] = 1
+                elif tabuleiro[linha][coluna] == -2:
+                    print(f'Jogador {vez} caiu em um buraco!')
                     revelado[linha][coluna] = 2
+
                 else:
-                    print("Nada")
-                    revelado[linha][coluna] = 0
-                print(evento.pos)
+                    print(f'Jogador {vez} não encontrou nada.')
+                    revelado[linha][coluna] = 3
+
+                    print(evento.pos)
+        pygame.draw.rect(tela, cores['branca'], (0, 200, 200, 50))
+        texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}',False,cores['azul'])
+        texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação:{pontuacao[1]}',False,cores['azul'])
+        texto_vez = fonte.render(f'Vez:{vez}',False,cores['preto'])
+        tela.blit(texto_vez,(20,200))
         tela.blit(texto_jogador_1,(20,210))
         tela.blit(texto_jogador_2,(20,230))
 
@@ -110,10 +147,10 @@ def main():
             for j in range(colunas):
 
                 if revelado[i][j] == 1:
-                    pygame.draw.rect(tela,cores['azul'],(j * 50 + 1, i * 50 + 1, 49, 49))
+                    pygame.draw.rect(tela,cores['azul'],(j * 50 + 1, i * 50+1 , 49, 49))
 
                 elif revelado[i][j] == 2:
-                    pygame.draw.rect(tela,cores['vermelho'],(j * 50 + 1, i * 50 + 1, 49, 49))
+                    pygame.draw.rect(tela,cores['vermelho'],(j * 50 + 1 , i * 50 + 1 , 49, 49))
                                 
         pygame.display.update()
 if __name__ == '__main__':
