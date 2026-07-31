@@ -8,6 +8,12 @@ def main():
     tela = pygame.display.set_mode((largura,altura))
     pygame.display.set_caption('Caça ao tesouro')
     pontuacao = [0,0] #Pontuaçao[0] == Jogador 1 e pontuação[1] == Jogador 2
+    
+    som_tesouro = pygame.mixer.Sound("pygame_tesouro.wav")
+    som_buraco = pygame.mixer.Sound("pygame_buraco.wav")
+    som_contagem = pygame.mixer.Sound("pygame_contagem.wav")
+    img_tesouro = pygame.transform.scale(pygame.image.load("tesouro.png"), (49,49))
+    img_buraco = pygame.transform.scale(pygame.image.load("buraco.png"), (49, 49))
  #Desenhar as coisas
  
     cores = {
@@ -151,15 +157,19 @@ def main():
                 if tabuleiro[linha][coluna] == -1:
                         print(f'Jogador {vez} achou um tesouro!')
                         revelado[linha][coluna] = 1
+                        som_tesouro.play()
                 elif tabuleiro[linha][coluna] == -2:
                     print(f'Jogador {vez} caiu em um buraco!')
                     revelado[linha][coluna] = 2
+                    som_buraco.play()
 
                 else:
                     print(f'Jogador {vez} não encontrou nada.')
                     print(f'Tem {tabuleiro[linha][coluna]} ao redor!')
                     revelado[linha][coluna] = 3
                     print(evento.pos)
+                    som_contagem.play()
+                    
                 
         pygame.draw.rect(tela, cores['branca'], (0, 200, 200, 50))
         texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}',False,cores['azul'])
@@ -173,10 +183,10 @@ def main():
             for j in range(colunas):
 
                 if revelado[i][j] == 1:
-                    pygame.draw.rect(tela,cores['azul'],(j * 50 + 1, i * 50 +1 , 49, 49))
+                	tela.blit(img_tesouro, (j * 50 + 1, i * 50 +1 , 49, 49))
 
                 elif revelado[i][j] == 2:
-                    pygame.draw.rect(tela,cores['vermelho'],(j * 50 + 1 , i * 50 + 1 , 49, 49))
+                    tela.blit(img_buraco, (j * 50 + 1 , i * 50 + 1 , 49, 49))
                 elif revelado[i][j] == 3:
                     texto_numeros = fonte.render(str(tabuleiro[i][j]),True,cores['preto'])
                     tela.blit(texto_numeros, (j * 50 + 20, i * 50 + 20))
