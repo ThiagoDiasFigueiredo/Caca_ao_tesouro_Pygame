@@ -112,7 +112,7 @@ def main():
 
                 tabuleiro[i][j] = contar_tesouros
 #Qual jogador vai começar:
-    vez = random.choice([1, 2])
+    vez = random.choice([1,2])
     print(f"Quem começa é o Jogador {vez}")
     #Looping do jogo
     running = True
@@ -132,7 +132,9 @@ def main():
                     
 
                 if tabuleiro[linha][coluna] == -1: #Tesouro
-
+                    print(f'Jogador {vez} achou um tesouro!')
+                    revelado[linha][coluna] = 1
+                    som_tesouro.play()
                     if vez == 1:
                         pontuacao[0] += 100
                         vez = 2
@@ -140,7 +142,11 @@ def main():
                         pontuacao[1] += 100
                         vez = 1
 
-                elif tabuleiro[linha][coluna] == -2:
+                elif tabuleiro[linha][coluna] == -2: #Buraco
+                    
+                    print(f'Jogador {vez} caiu em um buraco!')
+                    revelado[linha][coluna] = 2
+                    som_buraco.play()
 
                     if vez == 1:
                         pontuacao[0] -= 50
@@ -153,24 +159,17 @@ def main():
                         if pontuacao[1] < 0:
                             pontuacao[1] = 0
                         vez = 1
-
-                if tabuleiro[linha][coluna] == -1:
-                        print(f'Jogador {vez} achou um tesouro!')
-                        revelado[linha][coluna] = 1
-                        som_tesouro.play()
-                elif tabuleiro[linha][coluna] == -2:
-                    print(f'Jogador {vez} caiu em um buraco!')
-                    revelado[linha][coluna] = 2
-                    som_buraco.play()
-
                 else:
                     print(f'Jogador {vez} não encontrou nada.')
                     print(f'Tem {tabuleiro[linha][coluna]} ao redor!')
                     revelado[linha][coluna] = 3
                     print(evento.pos)
                     som_contagem.play()
-                    
-                
+                    if vez == 1:
+                        vez = 2
+                    elif vez == 2:
+                        vez = 1
+            
         pygame.draw.rect(tela, cores['branca'], (0, 200, 200, 50))
         texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}',False,cores['azul'])
         texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação:{pontuacao[1]}',False,cores['vermelho'])
@@ -181,15 +180,16 @@ def main():
 
         for i in range(linhas):
             for j in range(colunas):
-
                 if revelado[i][j] == 1:
                 	tela.blit(img_tesouro, (j * 50 + 1, i * 50 +1 , 49, 49))
 
                 elif revelado[i][j] == 2:
                     tela.blit(img_buraco, (j * 50 + 1 , i * 50 + 1 , 49, 49))
+
                 elif revelado[i][j] == 3:
                     texto_numeros = fonte.render(str(tabuleiro[i][j]),True,cores['preto'])
                     tela.blit(texto_numeros, (j * 50 + 20, i * 50 + 20))
         pygame.display.update()
+        
 if __name__ == '__main__':
     main()
