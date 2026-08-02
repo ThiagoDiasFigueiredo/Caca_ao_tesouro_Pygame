@@ -81,6 +81,7 @@ def main():
     revelado = []
     for i in range(linhas):
         revelado.append([0]*colunas)
+    
 #Casas sem nada
     
     for i in range(linhas):
@@ -181,15 +182,29 @@ def main():
         for i in range(linhas):
             for j in range(colunas):
                 if revelado[i][j] == 1:
-                	tela.blit(img_tesouro, (j * 50 + 1, i * 50 +1 , 49, 49))
+                    
+                    tela.blit(img_tesouro, (j * 50 + 1, i * 50 +1 , 49, 49))
 
                 elif revelado[i][j] == 2:
+                    
                     tela.blit(img_buraco, (j * 50 + 1 , i * 50 + 1 , 49, 49))
 
                 elif revelado[i][j] == 3:
+                    
                     texto_numeros = fonte.render(str(tabuleiro[i][j]),True,cores['preto'])
                     tela.blit(texto_numeros, (j * 50 + 20, i * 50 + 20))
-        pygame.display.update()
+        #Fechar jogo
+
+        acabou = True
+        for i in range(linhas):
+            for j in range(colunas):
+                    if revelado[i][j] == 0:
+                        acabou = False
+                
+        if acabou:
+            running = False
+            
+        pygame.display.update() 
         
 if __name__ == '__main__':
     main()
