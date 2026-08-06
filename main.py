@@ -8,7 +8,6 @@ def main():
     altura = 250
     tela = pygame.display.set_mode((largura, altura))
     pygame.display.set_caption('Caça ao tesouro')
-    pontuacao = [0, 0] # Pontuação[0] == Jogador 1 e pontuação[1] == Jogador 2
     estado = 'menu'
 
     som_tesouro = pygame.mixer.Sound("pygame_tesouro.wav")
@@ -42,12 +41,12 @@ def main():
 
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_RETURN and estado == 'menu':
-                    pontuacao = [0, 0]
+                    pontuacao = [0,0]
 
                     tela.fill(cores['branca'])
 
                     pos_y = 0
-                    for i in range(num_linhas + 1):
+                    for i in range(num_linhas):
                         pygame.draw.line(tela, cores['preto'], (0, pos_y), (tamanho_grade, pos_y),1)
                         pos_y += lado_quadrado
 
@@ -106,7 +105,7 @@ def main():
                                         contar_tesouros += 1
                                 tabuleiro[i][j] = contar_tesouros
 
-                    vez = random.choice([1, 2])
+                    vez = random.randint(1,2)
                     print(f"Quem começa é o Jogador {vez}")
 
                     estado = 'jogando'
@@ -223,7 +222,7 @@ def main():
                     vencedor = 'Jogador 1'
                 elif pontuacao[1] > pontuacao[0]:
                     vencedor = 'Jogador 2'
-                else:
+                else:   
                     vencedor = 'Empate'
                 estado = 'vitoria'
 
