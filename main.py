@@ -169,23 +169,24 @@ def main():
             if vencedor == 'Jogador 1':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['azul'])
-                tela.blit(texto_vitoria1, (20, 100)) 
-                tela.blit(texto_vitoria2, (65, 125))
+                tela.blit(texto_vitoria1, (20, 30)) 
+                tela.blit(texto_vitoria2, (65, 50))
 
             elif vencedor == 'Jogador 2':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['vermelho'])
-                tela.blit(texto_vitoria1, (20, 100)) 
-                tela.blit(texto_vitoria2, (65, 125))
+                tela.blit(texto_vitoria1, (20, 30)) 
+                tela.blit(texto_vitoria2, (65, 50))
 
             elif vencedor == 'Empate':
                 texto_vitoria1 = fonte.render('Houve um EMPATE', False, cores['preto'])
-                tela.blit(texto_vitoria1, (30, 100))
+                tela.blit(texto_vitoria1, (42, 50))
 
-            texto_retorno = fonte.render('     Aperte ENTER \npara retornar ao menu', False, cores['preto'])
-            tela.blit(texto_retorno, (30, 150))
+            texto_retorno = fonte.render('ENTER para retornar ao menu', False, cores['preto'])
+            
+            tela.blit(texto_retorno, (5, 150))
             texto_fecha = fonte.render('Aperte ESC para sair do jogo', False, cores['preto'])
-            tela.blit(texto_fecha, (10, 190))
+            tela.blit(texto_fecha, (10, 210))
 
         if estado == 'menu':
             tela.fill(cores['preto'])
