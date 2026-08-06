@@ -30,14 +30,13 @@ def main():
 
     pos_y = 0
     #Linhas horizontais
-    for i in range(num_linhas + 1):  # +1 para fechar a última borda
-        pygame.draw.line(tela, cores['preto'], (0, pos_y), (tamanho_grade, pos_y), 1)
-        pos_y += lado_quadrado
+    for i in range(num_linhas + 1):  
+            pygame.draw.line(tela, cores['preto'], (0, pos_y), (tamanho_grade, pos_y),1)
+            pos_y += lado_quadrado
 
-    
     pos_x = 0
     #Linhas verticais
-    for j in range(num_linhas + 1):
+    for j in range(num_linhas):
         pygame.draw.line(tela, cores['preto'], (pos_x, 0), (pos_x, tamanho_grade), 1)
         pos_x += lado_quadrado
 
@@ -175,7 +174,7 @@ def main():
         texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}',False,cores['azul'])
         texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação:{pontuacao[1]}',False,cores['vermelho'])
         texto_vez = fonte.render(f'Vez:{vez}',False,cores['preto'])
-        tela.blit(texto_vez,(20,200))
+        tela.blit(texto_vez,(20,201))
         tela.blit(texto_jogador_1,(20,210))
         tela.blit(texto_jogador_2,(20,230))
 
@@ -200,7 +199,7 @@ def main():
             for j in range(colunas):
                     if revelado[i][j] == 0:
                         acabou = False
-                
+            
         if acabou:
             running = False
             
