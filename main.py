@@ -8,7 +8,6 @@ def main():
     altura = 250
     tela = pygame.display.set_mode((largura, altura))
     pygame.display.set_caption('Caça ao tesouro')
-    pontuacao = [0, 0] # Pontuação[0] == Jogador 1 e pontuação[1] == Jogador 2
     estado = 'menu'
 
     som_tesouro = pygame.mixer.Sound("pygame_tesouro.wav")
@@ -16,7 +15,7 @@ def main():
     som_contagem = pygame.mixer.Sound("pygame_contagem.wav")
     img_tesouro = pygame.transform.scale(pygame.image.load("tesouro.png"), (49, 49))
     img_buraco = pygame.transform.scale(pygame.image.load("buraco.png"), (49, 49))
-
+    img_menu = pygame.transform.scale(pygame.image.load('menu.png'),(200,250))
     cores = {
         'branca': (255, 255, 255),
         'azul': (0, 0, 255),
@@ -42,12 +41,12 @@ def main():
 
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_RETURN and estado == 'menu':
-                    pontuacao = [0, 0]
+                    pontuacao = [0,0]
 
                     tela.fill(cores['branca'])
 
                     pos_y = 0
-                    for i in range(num_linhas + 1):
+                    for i in range(num_linhas):
                         pygame.draw.line(tela, cores['preto'], (0, pos_y), (tamanho_grade, pos_y),1)
                         pos_y += lado_quadrado
 
@@ -106,7 +105,7 @@ def main():
                                         contar_tesouros += 1
                                 tabuleiro[i][j] = contar_tesouros
 
-                    vez = random.choice([1, 2])
+                    vez = random.randint(1,2)
                     print(f"Quem começa é o Jogador {vez}")
 
                     estado = 'jogando'
@@ -169,29 +168,30 @@ def main():
             if vencedor == 'Jogador 1':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['azul'])
-                tela.blit(texto_vitoria1, (20, 100)) 
-                tela.blit(texto_vitoria2, (65, 125))
+                tela.blit(texto_vitoria1, (20, 30)) 
+                tela.blit(texto_vitoria2, (65, 50))
 
             elif vencedor == 'Jogador 2':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['vermelho'])
-                tela.blit(texto_vitoria1, (20, 100)) 
-                tela.blit(texto_vitoria2, (65, 125))
+                tela.blit(texto_vitoria1, (20, 30)) 
+                tela.blit(texto_vitoria2, (65, 50))
 
             elif vencedor == 'Empate':
                 texto_vitoria1 = fonte.render('Houve um EMPATE', False, cores['preto'])
-                tela.blit(texto_vitoria1, (30, 100))
+                tela.blit(texto_vitoria1, (42, 50))
 
-            texto_retorno = fonte.render('     Aperte ENTER \npara retornar ao menu', False, cores['preto'])
-            tela.blit(texto_retorno, (30, 150))
+            texto_retorno = fonte.render('ENTER para retornar ao menu', False, cores['preto'])
+            
+            tela.blit(texto_retorno, (5, 150))
             texto_fecha = fonte.render('Aperte ESC para sair do jogo', False, cores['preto'])
-            tela.blit(texto_fecha, (10, 190))
+            tela.blit(texto_fecha, (10, 210))
 
         if estado == 'menu':
             tela.fill(cores['preto'])
             texto_menu = fonte.render('Aperte Enter para jogar', False, cores['branca'])
-            tela.blit(texto_menu, (20, 125))
-
+            tela.blit(img_menu, (0,0))
+            tela.blit(texto_menu,(20,170))
         if estado == 'jogando':
             pygame.draw.rect(tela, cores['branca'], (0, 200, 200, 50))
             texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}', False, cores['azul'])
@@ -222,7 +222,7 @@ def main():
                     vencedor = 'Jogador 1'
                 elif pontuacao[1] > pontuacao[0]:
                     vencedor = 'Jogador 2'
-                else:
+                else:   
                     vencedor = 'Empate'
                 estado = 'vitoria'
 
