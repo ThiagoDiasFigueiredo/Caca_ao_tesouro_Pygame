@@ -16,6 +16,8 @@ def main():
     img_tesouro = pygame.transform.scale(pygame.image.load("tesouro.png"), (49, 49))
     img_buraco = pygame.transform.scale(pygame.image.load("buraco.png"), (49, 49))
     img_menu = pygame.transform.scale(pygame.image.load('menu.png'),(200,250))
+    img_vitoria = pygame.transform.scale(pygame.image.load('vitoria.png'),(200,250))
+    img_empate = pygame.transform.scale(pygame.image.load('empate.png'),(200,250))
     cores = {
         'branca': (255, 255, 255),
         'azul': (0, 0, 255),
@@ -164,28 +166,30 @@ def main():
 
         # RENDERIZAÇÃO
         if estado == 'vitoria':
-            tela.fill(cores['branca'])
             if vencedor == 'Jogador 1':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['azul'])
-                tela.blit(texto_vitoria1, (20, 30)) 
+                tela.blit(img_vitoria,(0,0))
+                tela.blit(texto_vitoria1, (15, 10)) 
                 tela.blit(texto_vitoria2, (65, 50))
-
+                
             elif vencedor == 'Jogador 2':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['vermelho'])
-                tela.blit(texto_vitoria1, (20, 30)) 
+                tela.blit(img_vitoria,(0,0))
+                tela.blit(texto_vitoria1, (15, 10)) 
                 tela.blit(texto_vitoria2, (65, 50))
-
+                
             elif vencedor == 'Empate':
                 texto_vitoria1 = fonte.render('Houve um EMPATE', False, cores['preto'])
-                tela.blit(texto_vitoria1, (42, 50))
-
+                tela.blit(img_empate,(0,0))
+                tela.blit(texto_vitoria1, (42, 20))
+                
             texto_retorno = fonte.render('ENTER para retornar ao menu', False, cores['preto'])
             
-            tela.blit(texto_retorno, (5, 150))
+            tela.blit(texto_retorno, (5, 200))
             texto_fecha = fonte.render('Aperte ESC para sair do jogo', False, cores['preto'])
-            tela.blit(texto_fecha, (10, 210))
+            tela.blit(texto_fecha, (10, 230))
 
         if estado == 'menu':
             tela.fill(cores['preto'])
