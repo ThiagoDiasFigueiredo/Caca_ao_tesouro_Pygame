@@ -15,7 +15,7 @@ def main():
     som_contagem = pygame.mixer.Sound("pygame_contagem.wav")
     img_tesouro = pygame.transform.scale(pygame.image.load("tesouro.png"), (49, 49))
     img_buraco = pygame.transform.scale(pygame.image.load("buraco.png"), (49, 49))
-
+    img_menu = pygame.transform.scale(pygame.image.load('Tela_menu.png'),(200,250))
     cores = {
         'branca': (255, 255, 255),
         'azul': (0, 0, 255),
@@ -190,8 +190,8 @@ def main():
         if estado == 'menu':
             tela.fill(cores['preto'])
             texto_menu = fonte.render('Aperte Enter para jogar', False, cores['branca'])
-            tela.blit(texto_menu, (20, 125))
-
+            tela.blit(img_menu, (0,0))
+            tela.blit(texto_menu,(20,170))
         if estado == 'jogando':
             pygame.draw.rect(tela, cores['branca'], (0, 200, 200, 50))
             texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}', False, cores['azul'])
