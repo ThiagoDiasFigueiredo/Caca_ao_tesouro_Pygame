@@ -82,7 +82,7 @@ def main():
 
                     for linha_tab in tabuleiro:
                         print(linha_tab)
-
+                    
                     revelado = []
                     for i in range(linhas):
                         revelado.append([0] * colunas)
@@ -216,7 +216,7 @@ def main():
                 for j in range(colunas):
                     if revelado[i][j] == 0:
                         acabou = False
-
+                    
             if acabou:
                 if pontuacao[0] > pontuacao[1]:
                     vencedor = 'Jogador 1'
