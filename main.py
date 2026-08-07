@@ -15,7 +15,7 @@ def main():
     som_contagem = pygame.mixer.Sound("pygame_contagem.wav")
     img_tesouro = pygame.transform.scale(pygame.image.load("tesouro.png"), (49, 49))
     img_buraco = pygame.transform.scale(pygame.image.load("buraco.png"), (49, 49))
-    img_menu = pygame.transform.scale(pygame.image.load('Tela_menu.png'),(200,250))
+    img_menu = pygame.transform.scale(pygame.image.load('menu.png'),(200,250))
     cores = {
         'branca': (255, 255, 255),
         'azul': (0, 0, 255),
