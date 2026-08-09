@@ -4,6 +4,7 @@ import random
 def main():
     # Tela
     pygame.init()
+    pygame.mixer.init()
     largura = 200
     altura = 250
     tela = pygame.display.set_mode((largura, altura))
@@ -16,6 +17,10 @@ def main():
     som_contagem = pygame.mixer.Sound("pygame_contagem.wav")
     img_tesouro = pygame.transform.scale(pygame.image.load("tesouro.png"), (49, 49))
     img_buraco = pygame.transform.scale(pygame.image.load("buraco.png"), (49, 49))
+    
+    pygame.mixer.music.load("musica_menu.wav")
+    pygame.mixer.music.set_volume(0.4)
+    pygame.mixer.music.play(-1)
 
     cores = {
         'branca': (255, 255, 255),
@@ -43,6 +48,7 @@ def main():
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_RETURN and estado == 'menu':
                     pontuacao = [0, 0]
+                    pygame.mixer.music.stop()
 
                     tela.fill(cores['branca'])
 
@@ -114,6 +120,7 @@ def main():
                 # Controles na tela de vitória
                 if evento.key == pygame.K_RETURN and estado == 'vitoria':
                     estado = 'menu'
+                    pygame.mixer.music.play(-1)
                     print('menu')
                 if evento.key == pygame.K_ESCAPE and estado == 'vitoria':
                     running = False
