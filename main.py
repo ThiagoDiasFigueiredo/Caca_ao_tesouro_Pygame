@@ -1,8 +1,7 @@
-import pygame
-import random
-
 def main():
-    # Tela
+    import pygame
+    import random
+    
     pygame.init()
     pygame.mixer.init()
     largura = 200
@@ -23,9 +22,9 @@ def main():
     msc_menu = pygame.mixer.Sound("musica_menu.wav")
     msc_vitoria = pygame.mixer.Sound("musica_vitoria.wav")
     msc_jogo = pygame.mixer.Sound("musica_jogo.wav")
-    msc_jogo.set_volume(0.05)
+    msc_jogo.set_volume(0.2)
     
-    msc_menu.play(-1)    
+    msc_menu.play()    
     
     cores = {
         'branca': (255, 255, 255),
@@ -33,17 +32,17 @@ def main():
         'vermelho': (255, 0, 0),
         'preto': (0, 0, 0),
         'verde': (0, 255, 0),
+        
     }
 
     fonte = pygame.font.Font(None, 20)
     lado_quadrado = 50
     num_linhas = 4
-    tamanho_grade = lado_quadrado * num_linhas  # 200
+    tamanho_grade = lado_quadrado * num_linhas
 
     linhas = 4
     colunas = 4
-
-    # Looping do jogo
+    
     running = True
     while running:
         for evento in pygame.event.get():
@@ -54,7 +53,7 @@ def main():
                 if evento.key == pygame.K_RETURN and estado == 'menu':
                     pontuacao = [0,0]
                     msc_menu.stop()
-                    msc_jogo.play(-1)
+                    msc_jogo.play()
 
                     tela.fill(cores['branca'])
 
@@ -70,10 +69,7 @@ def main():
 
                     tabuleiro = []
                     for i in range(linhas):
-                        linha = []
-                        for j in range(colunas):
-                            linha.append(0)
-                        tabuleiro.append(linha)
+                        tabuleiro.append([0]*colunas)
 
                     tesouros = 6
                     buracos = 3
@@ -142,7 +138,7 @@ def main():
                 if revelado[linha][coluna] != 0:
                     continue
 
-                if tabuleiro[linha][coluna] == -1: # Tesouro
+                if tabuleiro[linha][coluna] == -1: 
                     print(f'Jogador {vez} achou um tesouro!')
                     revelado[linha][coluna] = 1
                     som_tesouro.play()
@@ -153,7 +149,7 @@ def main():
                         pontuacao[1] += 100
                         vez = 1
 
-                elif tabuleiro[linha][coluna] == -2: # Buraco
+                elif tabuleiro[linha][coluna] == -2: 
                     print(f'Jogador {vez} caiu em um buraco!')
                     revelado[linha][coluna] = 2
                     som_buraco.play()
@@ -177,7 +173,7 @@ def main():
                     elif vez == 2:
                         vez = 1
 
-        # RENDERIZAÇÃO
+        
         if estado == 'vitoria':
             if vencedor == 'Jogador 1':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
@@ -189,7 +185,7 @@ def main():
             elif vencedor == 'Jogador 2':
                 texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['vermelho'])
-                tela.blit(img_vitoria,(0,0))
+                tela.blit(img_vitoria,(0,0) )
                 tela.blit(texto_vitoria1, (15, 10)) 
                 tela.blit(texto_vitoria2, (65, 50))
                 
@@ -233,7 +229,7 @@ def main():
                 for j in range(colunas):
                     if revelado[i][j] == 0:
                         acabou = False
-                    
+            
             if acabou:
                 if pontuacao[0] > pontuacao[1]:
                     vencedor = 'Jogador 1'
