@@ -4,6 +4,7 @@ import random
 def main():
     # Tela
     pygame.init()
+    pygame.mixer.init()
     largura = 200
     altura = 250
     tela = pygame.display.set_mode((largura, altura))
@@ -18,6 +19,14 @@ def main():
     img_menu = pygame.transform.scale(pygame.image.load('menu.png'),(200,250))
     img_vitoria = pygame.transform.scale(pygame.image.load('vitoria.png'),(200,250))
     img_empate = pygame.transform.scale(pygame.image.load('empate.png'),(200,250))
+    
+    msc_menu = pygame.mixer.Sound("musica_menu.wav")
+    msc_vitoria = pygame.mixer.Sound("musica_vitoria.wav")
+    msc_jogo = pygame.mixer.Sound("musica_jogo.wav")
+    msc_jogo.set_volume(0.05)
+    
+    msc_menu.play(-1)    
+    
     cores = {
         'branca': (255, 255, 255),
         'azul': (0, 0, 255),
@@ -44,6 +53,8 @@ def main():
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_RETURN and estado == 'menu':
                     pontuacao = [0,0]
+                    msc_menu.stop()
+                    msc_jogo.play(-1)
 
                     tela.fill(cores['branca'])
 
@@ -115,6 +126,8 @@ def main():
                 # Controles na tela de vitória
                 if evento.key == pygame.K_RETURN and estado == 'vitoria':
                     estado = 'menu'
+                    msc_vitoria.stop()
+                    msc_menu.play(-1)
                     print('menu')
                 if evento.key == pygame.K_ESCAPE and estado == 'vitoria':
                     running = False
@@ -229,8 +242,10 @@ def main():
                 else:   
                     vencedor = 'Empate'
                 estado = 'vitoria'
-
+                msc_jogo.stop()
+                msc_vitoria.play()
+                
         pygame.display.update()
 
 if __name__ == '__main__':
-    main()
+    main()                        
