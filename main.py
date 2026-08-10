@@ -15,7 +15,7 @@ def main():
     som_contagem = pygame.mixer.Sound("pygame_contagem.wav")
 
     img_tesouro = pygame.transform.scale(pygame.image.load("tesouro.png"), (46, 46))
-    img_buraco = pygame.transform.scale(pygame.image.load("buraco1.png"), (46, 46))
+    img_buraco = pygame.transform.scale(pygame.image.load("buraco.png"), (46, 46))
     img_menu = pygame.transform.scale(pygame.image.load('menu.png'),(500,650))
     img_vitoria = pygame.transform.scale(pygame.image.load('vitoria.png'),(500,600))
     img_empate = pygame.transform.scale(pygame.image.load('empate.png'),(500,600))
