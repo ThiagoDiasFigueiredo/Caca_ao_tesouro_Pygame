@@ -32,13 +32,14 @@ def main():
         'vermelho': (255, 0, 0),
         'preto': (0, 0, 0),
         'verde': (0, 255, 0),
-        
+        'areia': (194,178,128),
+        'marrom': (101,67,33),
     }
 
-    fonte = pygame.font.Font(None, 20)
+    fonte = pygame.font.Font(None,20)
     lado_quadrado = 50
-    num_linhas = 4
-    tamanho_grade = lado_quadrado * num_linhas
+    num_linhas = 5
+    tamanho_grade = lado_quadrado * (num_linhas -1)
 
     linhas = 4
     colunas = 4
@@ -55,16 +56,16 @@ def main():
                     msc_menu.stop()
                     msc_jogo.play()
 
-                    tela.fill(cores['branca'])
+                    tela.fill(cores['areia'])
 
                     pos_y = 0
                     for i in range(num_linhas):
-                        pygame.draw.line(tela, cores['preto'], (0, pos_y), (tamanho_grade, pos_y),1)
+                        pygame.draw.line(tela, cores['marrom'], (0, pos_y), (tamanho_grade, pos_y),2)
                         pos_y += lado_quadrado
 
                     pos_x = 0
                     for j in range(num_linhas):
-                        pygame.draw.line(tela, cores['preto'], (pos_x, 0), (pos_x, tamanho_grade), 1)
+                        pygame.draw.line(tela, cores['marrom'], (pos_x, 0), (pos_x, tamanho_grade), 2)
                         pos_x += lado_quadrado
 
                     tabuleiro = []
@@ -119,7 +120,6 @@ def main():
 
                     estado = 'jogando'
 
-                # Controles na tela de vitória
                 if evento.key == pygame.K_RETURN and estado == 'vitoria':
                     estado = 'menu'
                     msc_vitoria.stop()
@@ -128,6 +128,8 @@ def main():
                 if evento.key == pygame.K_ESCAPE and estado == 'vitoria':
                     running = False
                     print('fechou')
+                if evento.key == pygame.K_ESCAPE and estado == 'jogando':
+                    running = False
 
             if evento.type == pygame.MOUSEBUTTONDOWN and estado == 'jogando':
                 x, y = evento.pos
@@ -135,6 +137,7 @@ def main():
                 linha = y // 50
                 if y >= 200:
                     continue
+
                 if revelado[linha][coluna] != 0:
                     continue
 
@@ -176,53 +179,52 @@ def main():
         
         if estado == 'vitoria':
             if vencedor == 'Jogador 1':
-                texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
+                texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['branca'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['azul'])
                 tela.blit(img_vitoria,(0,0))
                 tela.blit(texto_vitoria1, (15, 10)) 
                 tela.blit(texto_vitoria2, (65, 50))
                 
             elif vencedor == 'Jogador 2':
-                texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['preto'])
+                texto_vitoria1 = fonte.render('O vencedor da partida foi:', False, cores['branca'])
                 texto_vitoria2 = fonte.render(f'{vencedor}', False, cores['vermelho'])
                 tela.blit(img_vitoria,(0,0) )
                 tela.blit(texto_vitoria1, (15, 10)) 
                 tela.blit(texto_vitoria2, (65, 50))
                 
             elif vencedor == 'Empate':
-                texto_vitoria1 = fonte.render('Houve um EMPATE', False, cores['preto'])
+                texto_vitoria1 = fonte.render('Houve um EMPATE', False, cores['branca'])
                 tela.blit(img_empate,(0,0))
                 tela.blit(texto_vitoria1, (42, 20))
                 
-            texto_retorno = fonte.render('ENTER para retornar ao menu', False, cores['preto'])
+            texto_retorno = fonte.render('ENTER para retornar ao menu', False, cores['branca'])
             
-            tela.blit(texto_retorno, (5, 200))
-            texto_fecha = fonte.render('Aperte ESC para sair do jogo', False, cores['preto'])
+            tela.blit(texto_retorno, (5, 190))
+            texto_fecha = fonte.render('Aperte ESC para sair do jogo', False, cores['branca'])
             tela.blit(texto_fecha, (10, 230))
 
         if estado == 'menu':
-            tela.fill(cores['preto'])
             texto_menu = fonte.render('Aperte Enter para jogar', False, cores['branca'])
             tela.blit(img_menu, (0,0))
             tela.blit(texto_menu,(20,170))
         if estado == 'jogando':
-            pygame.draw.rect(tela, cores['branca'], (0, 200, 200, 50))
+            pygame.draw.rect(tela, cores['branca'], (0, 201, 201, 50))
             texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}', False, cores['azul'])
             texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação:{pontuacao[1]}', False, cores['vermelho'])
             texto_vez = fonte.render(f'Vez:{vez}', False, cores['preto'])
             tela.blit(texto_vez, (20, 201))
-            tela.blit(texto_jogador_1, (20, 210))
+            tela.blit(texto_jogador_1, (20, 215))
             tela.blit(texto_jogador_2, (20, 230))
 
             for i in range(linhas):
                 for j in range(colunas):
                     if revelado[i][j] == 1:
-                        tela.blit(img_tesouro, (j * 50 + 1, i * 50 + 1))
+                        tela.blit(img_tesouro, (j * 50 , i * 50))
                     elif revelado[i][j] == 2:
-                        tela.blit(img_buraco, (j * 50 + 1, i * 50 + 1))
+                        tela.blit(img_buraco, (j * 50 , i * 50 ))
                     elif revelado[i][j] == 3:
                         texto_numeros = fonte.render(str(tabuleiro[i][j]), True, cores['preto'])
-                        tela.blit(texto_numeros, (j * 50 + 20, i * 50 + 20))
+                        tela.blit(texto_numeros, (j * 50 + 20, i * 50 +20 ))
 
             acabou = True
             for i in range(linhas):
@@ -244,4 +246,4 @@ def main():
         pygame.display.update()
 
 if __name__ == '__main__':
-    main()                        
+    main()
