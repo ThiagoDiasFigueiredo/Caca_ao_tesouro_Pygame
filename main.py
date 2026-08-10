@@ -63,7 +63,7 @@ def main():
     lado_quadrado = 50
 
     config_facil = {'linhas': 4, 'colunas': 4, 'tesouros': 6, 'buracos': 3, 'diagonais': False}
-    config_dificil = {'linhas': 10, 'colunas': 10, 'tesouros': 12, 'buracos': 8, 'diagonais': True}
+    config_dificil = {'linhas': 8, 'colunas': 8, 'tesouros': 15, 'buracos': 10, 'diagonais': True}
 
     running = True
     while running:
@@ -104,7 +104,7 @@ def main():
                     fonte_placar = fonte3
                     espaco_placar = 16
                 else:
-                    largura, altura = 500, 600
+                    largura, altura = 400, 500
                     fonte_placar = fonte1
                     espaco_placar = 30
                 tela = pygame.display.set_mode((largura,altura))
