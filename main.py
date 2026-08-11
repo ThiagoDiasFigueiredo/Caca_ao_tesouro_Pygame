@@ -51,6 +51,10 @@ def main():
                 running = False
 
             if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_ESCAPE and estado == 'menu':
+                    running = False
+                    print('FECHOU')
+
                 if evento.key == pygame.K_RETURN and estado == 'menu':
                     pontuacao = [0,0]
                     msc_menu.stop()
@@ -204,9 +208,11 @@ def main():
             tela.blit(texto_fecha, (10, 230))
 
         if estado == 'menu':
-            texto_menu = fonte.render('Aperte Enter para jogar', False, cores['branca'])
+            texto_menu1 = fonte.render('Aperte Enter para jogar', False, cores['branca'])
+            texto_menu2 = fonte.render('Aperte ESC para sair', False, cores ['branca'])
             tela.blit(img_menu, (0,0))
-            tela.blit(texto_menu,(20,170))
+            tela.blit(texto_menu1,(20,170))
+            tela.blit(texto_menu2, (20, 190))
         if estado == 'jogando':
             pygame.draw.rect(tela, cores['areia'], (0, 201, 201, 50))
             texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}', False, cores['azul'])
