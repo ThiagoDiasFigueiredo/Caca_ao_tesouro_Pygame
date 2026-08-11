@@ -176,7 +176,7 @@ def main():
 
                 estado = 'jogando'
 
-            if evento.type == pygame.MOUSEBUTTONDOWN and estado == 'jogando':
+            elif evento.type == pygame.MOUSEBUTTONDOWN and estado == 'jogando':
                 x, y = evento.pos
                 coluna = x // 50
                 linha = y // 50
