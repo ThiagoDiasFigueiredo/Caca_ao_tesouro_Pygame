@@ -208,7 +208,7 @@ def main():
             tela.blit(img_menu, (0,0))
             tela.blit(texto_menu,(20,170))
         if estado == 'jogando':
-            pygame.draw.rect(tela, cores['branca'], (0, 201, 201, 50))
+            pygame.draw.rect(tela, cores['areia'], (0, 201, 201, 50))
             texto_jogador_1 = fonte.render(f'Jogador 1 - Pontuação:{pontuacao[0]}', False, cores['azul'])
             texto_jogador_2 = fonte.render(f'Jogador 2 - Pontuação:{pontuacao[1]}', False, cores['vermelho'])
             texto_vez = fonte.render(f'Vez:{vez}', False, cores['preto'])
