@@ -72,6 +72,10 @@ def main():
                 running = False
 
             if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_ESCAPE and estado == 'dificuldade':
+                    running == False
+                    print('FECHOU')
+
                 if evento.key == pygame.K_ESCAPE and estado == 'menu':
                     running = False
                     print('fechou')
